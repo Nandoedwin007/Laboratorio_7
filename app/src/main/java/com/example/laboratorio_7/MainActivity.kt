@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
             verContacto.id = data.getIntExtra(VerContacto.EXTRA_ID,-1)
             //contactoViewModelMain.update(verContacto)
         } else {
-            //Toast.makeText(this, "Contacto not saved!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Contacto not saved!", Toast.LENGTH_SHORT).show()
         }
     }
 }
