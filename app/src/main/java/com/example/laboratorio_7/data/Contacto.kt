@@ -5,7 +5,11 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "contacto_table")
-data class Contacto(var nombre:String, var telefono:String, var correo:String) {
+data class Contacto(
+    var nombre:String,
+    var telefono:String,
+    var correo:String,
+    var priority:Int) {
 
     @PrimaryKey(autoGenerate = true)
     var id:Int = 0

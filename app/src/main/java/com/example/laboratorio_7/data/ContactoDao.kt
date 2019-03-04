@@ -18,6 +18,6 @@ interface ContactoDao {
     @Query("DELETE FROM contacto_table")
     fun deleteAllContactos()
 
-    @Query("SELECT * FROM contacto_table")
+    @Query("SELECT * FROM contacto_table ORDER BY priority DESC")
     fun getAllContactos():LiveData<List<Contacto>>
 }
