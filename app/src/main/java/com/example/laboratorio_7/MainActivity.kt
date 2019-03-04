@@ -75,14 +75,14 @@ class MainActivity : AppCompatActivity() {
 
         adapter.setOnItemClickListener(object :ContactoAdapter.OnItemClickListener{
             override fun onItemClick(contacto: Contacto) {
-                var intent = Intent(baseContext,AgregarContacto::class.java)
-                intent.putExtra(AgregarContacto.EXTRA_ID,contacto.id)
-                intent.putExtra(AgregarContacto.EXTRA_NOMBRE,contacto.nombre)
-                intent.putExtra(AgregarContacto.EXTRA_TELEFONO,contacto.telefono)
-                intent.putExtra(AgregarContacto.EXTRA_CORREO,contacto.correo)
-                intent.putExtra(AgregarContacto.EXTRA_PRIORITY,contacto.priority)
+                var intent = Intent(baseContext,VerContacto::class.java)
+                intent.putExtra(VerContacto.EXTRA_ID,contacto.id)
+                intent.putExtra(VerContacto.EXTRA_NOMBRE,contacto.nombre)
+                intent.putExtra(VerContacto.EXTRA_TELEFONO,contacto.telefono)
+                intent.putExtra(VerContacto.EXTRA_CORREO,contacto.correo)
+                intent.putExtra(VerContacto.EXTRA_PRIORITY,contacto.priority)
 
-                startActivityForResult(intent, EDIT_CONTACTO_REQUEST)
+                startActivityForResult(intent, VER_CONTACTO_REQUEST)
             }
         })
     }
@@ -119,24 +119,24 @@ class MainActivity : AppCompatActivity() {
             contactoViewModelMain.insert(newContacto)
 
             Toast.makeText(this, "Contacto Creado!", Toast.LENGTH_SHORT).show()
-        } else if (requestCode == EDIT_CONTACTO_REQUEST && resultCode == Activity.RESULT_OK) {
-            val id = data?.getIntExtra(AgregarContacto.EXTRA_ID,-1)
+        } else if (requestCode == VER_CONTACTO_REQUEST && resultCode == Activity.RESULT_OK) {
+            val id = data?.getIntExtra(VerContacto.EXTRA_ID,-1)
 
             if (id == -1){
                 Toast.makeText(this, "Could not update! Error!", Toast.LENGTH_SHORT).show()
             }
 
-            val updateContacto = Contacto (
-                data!!.getStringExtra(AgregarContacto.EXTRA_NOMBRE),
-                data.getStringExtra(AgregarContacto.EXTRA_TELEFONO),
-                data.getStringExtra(AgregarContacto.EXTRA_CORREO),
-                data.getIntExtra(AgregarContacto.EXTRA_PRIORITY,1)
+            val verContacto = Contacto (
+                data!!.getStringExtra(VerContacto.EXTRA_NOMBRE),
+                data.getStringExtra(VerContacto.EXTRA_TELEFONO),
+                data.getStringExtra(VerContacto.EXTRA_CORREO),
+                data.getIntExtra(VerContacto.EXTRA_PRIORITY,1)
             )
 
-            updateContacto.id = data.getIntExtra(AgregarContacto.EXTRA_ID,-1)
-            contactoViewModelMain.update(updateContacto)
+            verContacto.id = data.getIntExtra(VerContacto.EXTRA_ID,-1)
+            //contactoViewModelMain.update(verContacto)
         } else {
-            Toast.makeText(this, "Contacto not saved!", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Contacto not saved!", Toast.LENGTH_SHORT).show()
         }
     }
 }
