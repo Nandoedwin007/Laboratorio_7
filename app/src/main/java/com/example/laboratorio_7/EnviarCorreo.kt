@@ -59,8 +59,6 @@ class EnviarCorreo : AppCompatActivity() {
                 finish()
                 //Se guarda en la bitácora que se ha envíado el correo, pero no es necesario
                 Log.i("Accion","Se ha enviado el correo")
-                //Una vez envíado  el correo se notifica con un SnackBar
-                //Snackbar.make(this,"Enviado desde " +MiNombre+" hasta "+destinatario,Snackbar.LENGTH_SHORT).show()
             }
         })
 

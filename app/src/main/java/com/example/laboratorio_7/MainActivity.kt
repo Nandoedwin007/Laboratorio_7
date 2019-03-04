@@ -27,9 +27,10 @@ class MainActivity : AppCompatActivity() {
         const val ADD_CONTACTO_REQUEST = 1
         const val EDIT_CONTACTO_REQUEST = 2
         const val VER_CONTACTO_REQUEST = 3
+        lateinit var contactoViewModelMain: ContactoViewModelMain
     }
 
-    private lateinit var contactoViewModelMain: ContactoViewModelMain
+
     private lateinit var contactoViewModelEdit: ContactoViewModelEdit
     private lateinit var contactoViewModelCreate: ContactoViewModelCreate
 
@@ -134,9 +135,26 @@ class MainActivity : AppCompatActivity() {
             )
 
             verContacto.id = data.getIntExtra(VerContacto.EXTRA_ID,-1)
-            //contactoViewModelMain.update(verContacto)
-        } else {
-            Toast.makeText(this, "Contacto not saved!", Toast.LENGTH_SHORT).show()
+            contactoViewModelMain.update(verContacto)
+        }  else if (requestCode == EDIT_CONTACTO_REQUEST && resultCode == Activity.RESULT_OK) {
+            val id = data?.getIntExtra(AgregarContacto.EXTRA_ID,-1)
+
+            if (id == -1){
+                Toast.makeText(this, "Could not update! Error!", Toast.LENGTH_SHORT).show()
+            }
+
+            val updateContacto = Contacto (
+                data!!.getStringExtra(AgregarContacto.EXTRA_NOMBRE),
+                data.getStringExtra(AgregarContacto.EXTRA_TELEFONO),
+                data.getStringExtra(AgregarContacto.EXTRA_CORREO),
+                data.getIntExtra(AgregarContacto.EXTRA_PRIORITY,1)
+            )
+
+            updateContacto.id = data.getIntExtra(VerContacto.EXTRA_ID,-1)
+            contactoViewModelMain.update(updateContacto)
+        }
+        else {
+            //Toast.makeText(this, "Contacto not saved!", Toast.LENGTH_SHORT).show()
         }
     }
 }

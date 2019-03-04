@@ -14,6 +14,8 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.laboratorio_7.MainActivity.Companion.ADD_CONTACTO_REQUEST
+import com.example.laboratorio_7.MainActivity.Companion.EDIT_CONTACTO_REQUEST
 import com.example.laboratorio_7.adapters.ContactoAdapter
 import com.example.laboratorio_7.data.Contacto
 import com.example.laboratorio_7.viewmodels.ContactoViewModelMain
@@ -30,12 +32,11 @@ class VerContacto : AppCompatActivity() {
         const val EXTRA_CORREO = "com.example.laboratorio_7.EXTRA_CORREO"
         const val EXTRA_PRIORITY = "com.example.laboratorio_7.EXTRA_PRIORITY"
 
-        const val ADD_CONTACTO_REQUEST = 1
-        const val EDIT_CONTACTO_REQUEST = 2
-        const val VER_CONTACTO_REQUEST = 3
     }
 
-    private lateinit var contactoViewModelMain: ContactoViewModelMain
+    //private lateinit var contactoViewModelMain: ContactoViewModelMain
+
+    //var contactoViewModelMain : ContactoAdapter = MainActivity.con
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,18 +78,6 @@ class VerContacto : AppCompatActivity() {
 
         }
 
-//        recycler_view.layoutManager = LinearLayoutManager(this )
-//        recycler_view.setHasFixedSize(true)
-//
-//        var adapter = ContactoAdapter()
-//
-//        recycler_view.adapter = adapter
-//
-//        contactoViewModelMain = ViewModelProviders.of(this).get(ContactoViewModelMain::class.java)
-//
-//        contactoViewModelMain.getAllContactos().observe(this, Observer<List<Contacto>> {
-//            adapter.submitList(it)
-//        })
 
         if (intent.hasExtra(EXTRA_ID)){
             title = "Ver Contacto"
@@ -127,9 +116,8 @@ class VerContacto : AppCompatActivity() {
                 intent.putExtra(AgregarContacto.EXTRA_CORREO,contacto.correo)
                 intent.putExtra(AgregarContacto.EXTRA_PRIORITY,contacto.priority)
 
-                startActivityForResult(intent, VerContacto.EDIT_CONTACTO_REQUEST)
+                startActivityForResult(intent, EDIT_CONTACTO_REQUEST)
 
-                //finish()
             }
         })
 
@@ -138,7 +126,7 @@ class VerContacto : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == VerContacto.ADD_CONTACTO_REQUEST && resultCode == Activity.RESULT_OK){
+        if (requestCode == ADD_CONTACTO_REQUEST && resultCode == Activity.RESULT_OK){
             val newContacto = Contacto (
                 data!!.getStringExtra(AgregarContacto.EXTRA_NOMBRE),
                 data.getStringExtra(AgregarContacto.EXTRA_TELEFONO),
@@ -146,10 +134,10 @@ class VerContacto : AppCompatActivity() {
                 data.getIntExtra(AgregarContacto.EXTRA_PRIORITY, 1)
 
             )
-            contactoViewModelMain.insert(newContacto)
+            //contactoViewModelMain.insert(newContacto)
 
             Toast.makeText(this, "Contacto Creado!", Toast.LENGTH_SHORT).show()
-        } else if (requestCode == VerContacto.EDIT_CONTACTO_REQUEST && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == EDIT_CONTACTO_REQUEST && resultCode == Activity.RESULT_OK) {
             val id = data?.getIntExtra(AgregarContacto.EXTRA_ID,-1)
 
             if (id == -1){
@@ -164,7 +152,7 @@ class VerContacto : AppCompatActivity() {
             )
 
             editarContacto.id = data.getIntExtra(VerContacto.EXTRA_ID,-1)
-            //contactoViewModelMain.update(editarContacto)
+            MainActivity.contactoViewModelMain.update(editarContacto)
         } else {
             //Toast.makeText(this, "Contacto not saved!", Toast.LENGTH_SHORT).show()
         }
